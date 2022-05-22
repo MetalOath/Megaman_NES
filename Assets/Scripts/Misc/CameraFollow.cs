@@ -6,10 +6,8 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform player;
 
-    public float minXClamp;
-    public float maxXClamp;
-    public float minYClamp;
-    public float maxYClamp;
+    public float minXClamp = -2.08f;
+    public float maxXClamp = 180.7f;
 
     void LateUpdate()
     {
@@ -21,9 +19,6 @@ public class CameraFollow : MonoBehaviour
 
             cameraTransform.x = player.transform.position.x;
             cameraTransform.x = Mathf.Clamp(cameraTransform.x, minXClamp, maxXClamp);
-
-            cameraTransform.y = player.transform.position.y;
-            cameraTransform.y = Mathf.Clamp(cameraTransform.y, minYClamp, maxYClamp);
 
             transform.position = cameraTransform;
         }
