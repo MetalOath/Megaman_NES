@@ -6,7 +6,6 @@ public class ShootProjectile : MonoBehaviour
 {
     SpriteRenderer sr;
     Animator anim;
-    PlayerController pc;
 
     public Transform projectileSpawnPointLeft;
     public Transform projectileSpawnPointRight;
@@ -18,10 +17,9 @@ public class ShootProjectile : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        pc = GetComponent<PlayerController>();
 
         if (projectileSpeed <= 0)
-            projectileSpeed = 14.0f;
+            projectileSpeed = 7.0f;
 
         if (!projectileSpawnPointLeft || !projectileSpawnPointRight || !projectilePrefab)
             Debug.LogWarning("Issue with inspector values");
@@ -33,7 +31,7 @@ public class ShootProjectile : MonoBehaviour
         AnimatorClipInfo[] curPlayingClip = anim.GetCurrentAnimatorClipInfo(0);
         if (curPlayingClip.Length > 0)
         {
-            if (Input.GetButtonDown("Fire1") && curPlayingClip[0].clip.name != "Fire" && curPlayingClip[0].clip.name != "Lookup" && pc.isGrounded)
+            if (Input.GetButtonDown("Fire1") && curPlayingClip[0].clip.name != "Fire" && curPlayingClip[0].clip.name != "Lookup")
                  anim.SetTrigger("Fire");
         }
     }

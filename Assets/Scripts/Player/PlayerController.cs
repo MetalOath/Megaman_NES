@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public int jumpForce;
     public bool isGrounded;
-    public bool isClimbing = false;
     public LayerMask isGroundLayer;
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -61,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
         if (jumpForce <= 0)
         {
-            jumpForce = 350;
+            jumpForce = 300;
         }
 
         if (groundCheckRadius <= 0)
@@ -96,18 +95,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (curPlayingClip[0].clip.name != "Fire")
             {
-                Vector2 moveDirection;
-
-                if (verticalInput > 0.1 && isClimbing)
-                {
-                    moveDirection = new Vector2(horizontalInput * speed, verticalInput * speed);
-                    anim.SetBool("isClimbing", true);
-                }
-                else
-                {
-                    moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
-                }
-
+                Vector2 moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
                 rb.velocity = moveDirection;
             }
             else
@@ -122,13 +110,8 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("combo", false);
         }
 
-        if (isClimbing == false)
-        {
-            anim.SetBool("isClimbing", false);
-        }
-
-        anim.SetFloat("vert", verticalInput);
         anim.SetFloat("speed", Mathf.Abs(horizontalInput));
+        anim.SetFloat("vert", verticalInput);
         anim.SetBool("isGrounded", isGrounded);
 
 
@@ -167,5 +150,16 @@ public class PlayerController : MonoBehaviour
 
         jumpForce /= 2;
         coroutineRunning = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Squish")
+        {
+            collision.gameObject.GetComponentInParent<EnemyWalker>().IsSquished();
+
+            rb.velocity = Vector2.zero;
+            rb.AddForce(Vector2.up * jumpForce);
+        }
     }
 }
