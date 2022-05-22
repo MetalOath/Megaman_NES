@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public int jumpForce;
     public bool isGrounded;
+    public bool isClimbing = false;
     public LayerMask isGroundLayer;
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -95,7 +96,18 @@ public class PlayerController : MonoBehaviour
             }
             else if (curPlayingClip[0].clip.name != "Fire")
             {
-                Vector2 moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
+                Vector2 moveDirection;
+
+                if (verticalInput > 0.1 && isClimbing)
+                {
+                    moveDirection = new Vector2(horizontalInput * speed, verticalInput * speed);
+                    anim.SetBool("isClimbing", true);
+                }
+                else
+                {
+                    moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
+                }
+
                 rb.velocity = moveDirection;
             }
             else
