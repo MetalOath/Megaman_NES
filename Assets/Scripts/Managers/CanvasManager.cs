@@ -26,8 +26,11 @@ public class CanvasManager : MonoBehaviour
 
     [Header("Slider")]
     public Slider volSlider;
-
     public AudioMixer mixer;
+
+    [Header("UI")]
+    public HorizontalLayoutGroup healthBar;
+    public Image hp;
 
     public void StartGame()
     {
@@ -58,10 +61,21 @@ public class CanvasManager : MonoBehaviour
             mixer.SetFloat("MasterVol", value);
     }
 
-    void OnLifeValueChange(int value)
+    void OnLifeValueChange()
     {
         if (livesText)
-            livesText.text = value.ToString();
+            livesText.text = GameManager.instance.lives.ToString();
+
+        if (healthBar)
+        {
+            for (int i = 0; i < healthBar.transform.childCount; i++)
+                Destroy(healthBar.transform.GetChild(i).gameObject);
+
+            for (int i = 0; i < GameManager.instance.lives; i++)
+            {
+                Instantiate(hp, healthBar.transform);
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -95,7 +109,7 @@ public class CanvasManager : MonoBehaviour
 
         //Add Listener to Lives value change
         if (livesText)
-            GameManager.instance.onLifeValueChanged.AddListener((value) => OnLifeValueChange(value));
+            GameManager.instance.onLifeValueChanged.AddListener((value) => OnLifeValueChange());
     }
 
     // Update is called once per frame

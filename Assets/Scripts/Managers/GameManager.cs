@@ -29,10 +29,11 @@ public class GameManager : MonoBehaviour
             }
 
             _lives = value;
-            onLifeValueChanged.Invoke(value);
 
             if (_lives > maxLives)
                 _lives = maxLives;
+
+            onLifeValueChanged.Invoke(value);
 
             if (_lives < 1)
                 GameOver();

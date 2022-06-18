@@ -28,10 +28,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     public virtual void Death()
     {
         GameManager.instance.sfxManager.Play(GameManager.instance.killSound, GameManager.instance.soundFXGroup);
+        if (GetComponent<Rigidbody2D>())
+            GetComponent<Rigidbody2D>().gravityScale = 0;
+        Destroy(GetComponent<Collider2D>());
+        gameObject.tag = "Untagged";
     }
 
     public virtual void TakeDamage(int damage)
