@@ -236,6 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   speed: 0
+  killSound: {fileID: 8300000, guid: 29ea7f8a56665f54a8cd3b91843c1212, type: 3}
+  soundFXGroup: {fileID: -1399683985931906479, guid: ab4a4c579fb65af49add6bbcf14bc8c5, type: 2}
 --- !u!61 &289373223426337494
 BoxCollider2D:
   m_ObjectHideFlags: 0
