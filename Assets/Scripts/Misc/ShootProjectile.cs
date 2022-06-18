@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ShootProjectile : MonoBehaviour
 {
     SpriteRenderer sr;
     Animator anim;
 
+
+    public AudioClip fireSFX;
+    public AudioMixerGroup soundFXMixer;
     public Transform projectileSpawnPointLeft;
     public Transform projectileSpawnPointRight;
     public float projectileSpeed;
@@ -19,7 +23,7 @@ public class ShootProjectile : MonoBehaviour
         anim = GetComponent<Animator>();
 
         if (projectileSpeed <= 0)
-            projectileSpeed = 14.0f;
+            projectileSpeed = 7.0f;
 
         if (!projectileSpawnPointLeft || !projectileSpawnPointRight || !projectilePrefab)
             Debug.LogWarning("Issue with inspector values");
@@ -48,5 +52,9 @@ public class ShootProjectile : MonoBehaviour
             Projectile curProjectile = Instantiate(projectilePrefab, projectileSpawnPointLeft.position, projectileSpawnPointLeft.rotation);
             curProjectile.speed = -projectileSpeed;
         }
+
+        GameManager.instance.playerInstance.GetComponent<ObjectSounds>().Play(fireSFX, soundFXMixer);
+
+        //Debug.LogError("Pause");
     }
 }

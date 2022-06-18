@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1333083014945913974}
   m_Layer: 0
   m_Name: EnemyProjectile
-  m_TagString: PlayerProjectile
+  m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41ed99dad0dbc04bbdbe3627a6cae40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieSound: {fileID: 8300000, guid: f5eefd3ad94d2ee428d0e9524d854ae2, type: 3}
+  soundFXGroup: {fileID: -1399683985931906479, guid: ab4a4c579fb65af49add6bbcf14bc8c5, type: 2}
   speed: 0
   lifetime: 0
   damageValue: 0
@@ -133,7 +135,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     public virtual void Death()
     {
         //no implementation needed here
+
     }
 
     public virtual void TakeDamage(int damage)

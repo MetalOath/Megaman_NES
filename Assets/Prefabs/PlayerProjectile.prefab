@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1333083014945913974}
   m_Layer: 0
   m_Name: PlayerProjectile
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 1572383891
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 196719799, guid: de9c09a6f3afc9f41812f038eb36bdd7, type: 3}
+  m_Sprite: {fileID: 764029468473576725, guid: aa367390d7408dd4a9b20c4170be2d06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,8 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41ed99dad0dbc04bbdbe3627a6cae40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieSound: {fileID: 8300000, guid: f5eefd3ad94d2ee428d0e9524d854ae2, type: 3}
+  soundFXGroup: {fileID: -1399683985931906479, guid: ab4a4c579fb65af49add6bbcf14bc8c5, type: 2}
   speed: 0
   lifetime: 0
+  damageValue: 0
 --- !u!50 &8154220757746729910
 Rigidbody2D:
   serializedVersion: 4
@@ -116,7 +119,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
