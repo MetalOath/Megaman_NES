@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2612324231166548772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.16413689, y: -0.23109591, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 1572383891
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6284743126234988054, guid: aa367390d7408dd4a9b20c4170be2d06, type: 3}
+  m_Sprite: {fileID: -1358877726, guid: 8e4fbac10221d624fa3a9d43b687e40d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,8 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41ed99dad0dbc04bbdbe3627a6cae40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieSound: {fileID: 8300000, guid: f5eefd3ad94d2ee428d0e9524d854ae2, type: 3}
-  soundFXGroup: {fileID: -1399683985931906479, guid: ab4a4c579fb65af49add6bbcf14bc8c5, type: 2}
   speed: 0
   lifetime: 0
   damageValue: 0

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
@@ -9,16 +8,13 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer sr;
-    public ObjectSounds sfxManager;
-
-    public AudioClip jumpSound;
-    public AudioClip dieSound;
-    public AudioMixerGroup soundFXGroup;
 
     
     public float speed;
     public int jumpForce;
     public bool isGrounded;
+    public bool isClimbing = false;
+    public bool lookingUp;
     public LayerMask isGroundLayer;
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -30,7 +26,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        sfxManager = GetComponent<ObjectSounds>();
 
         //Could be used as a double check to ensure groundcheck is set if we are null.
         if (!groundCheck)
@@ -45,19 +40,13 @@ public class PlayerController : MonoBehaviour
 
         if (jumpForce <= 0)
         {
-            jumpForce = 300;
+            jumpForce = 350;
         }
 
         if (groundCheckRadius <= 0)
         {
             groundCheckRadius = 0.2f;
         }
-
-        if (!sfxManager)
-        {
-            sfxManager = gameObject.AddComponent<ObjectSounds>();
-        }
-
     }
 
     // Update is called once per frame
@@ -69,11 +58,11 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && !lookingUp)
         {
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
-            sfxManager.Play(jumpSound, soundFXGroup);
+            GameManager.instance.sfxManager.Play(GameManager.instance.jumpSound, GameManager.instance.soundFXGroup);
         }
         if (curPlayingClip.Length > 0)
         {
@@ -86,7 +75,16 @@ public class PlayerController : MonoBehaviour
             }
             else if (curPlayingClip[0].clip.name != "Fire")
             {
-                Vector2 moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
+                Vector2 moveDirection;
+                if (verticalInput > 0.1 && isClimbing)
+                {
+                    moveDirection = new Vector2(horizontalInput * speed, verticalInput * speed);
+                    anim.SetBool("isClimbing", true);
+                }
+                else
+                {
+                    moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
+                }
                 rb.velocity = moveDirection;
             }
             else
@@ -95,15 +93,21 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-
         if (Input.GetButtonUp("Fire1") || verticalInput < 0.1)
         {
             anim.SetBool("combo", false);
         }
 
+        if (isClimbing == false)
+        {
+            anim.SetBool("isClimbing", false);
+        }
+
         anim.SetFloat("speed", Mathf.Abs(horizontalInput));
         anim.SetFloat("vert", verticalInput);
         anim.SetBool("isGrounded", isGrounded);
+        anim.SetBool("lookUp", isGrounded);
+        lookingUp = curPlayingClip[0].clip.name == "Lookup";
 
 
         //check for flipped
@@ -127,7 +131,7 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine("JumpForceChange");
             jumpForce /= 2;
-            StopCoroutine("JumpForceChange");
+            StartCoroutine("JumpForceChange");
         }
 
     }
@@ -156,6 +160,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "EnemyProjectile")
         {
             
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            GameManager.instance.lives--;
         }
     }
 }

@@ -31,8 +31,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void Death()
     {
-        //no implementation needed here
-
+        GameManager.instance.sfxManager.Play(GameManager.instance.killSound, GameManager.instance.soundFXGroup);
     }
 
     public virtual void TakeDamage(int damage)
@@ -47,7 +46,7 @@ public class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
 
         if (maxHealth <= 0)
-            maxHealth = 10;
+            maxHealth = 5;
 
         health = maxHealth;
     }

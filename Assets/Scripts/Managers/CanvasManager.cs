@@ -31,17 +31,20 @@ public class CanvasManager : MonoBehaviour
 
     public void StartGame()
     {
+        PlayButtonFX();
         SceneManager.LoadScene("Level");
     }
 
     public void ShowMainMenu()
     {
+        PlayButtonFX();
         settingsMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
 
     public void ShowSettingsMenu()
     {
+        PlayButtonFX();
         mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
@@ -103,6 +106,7 @@ public class CanvasManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.P))
             {
                 pauseMenu.SetActive(!pauseMenu.activeSelf);
+                GameManager.instance.sfxManager.Play(GameManager.instance.pauseSound, GameManager.instance.soundFXGroup);
 
                 //HINT FOR THE LAB
                 if (pauseMenu.activeSelf)
@@ -125,6 +129,7 @@ public class CanvasManager : MonoBehaviour
 
     public void ReturnToGame()
     {
+        PlayButtonFX();
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         GameManager.instance.playerInstance.GetComponent<PlayerController>().enabled = true;
@@ -133,8 +138,14 @@ public class CanvasManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        PlayButtonFX();
         SceneManager.LoadScene("Start");
         Time.timeScale = 1;
+    }
+
+    public void PlayButtonFX()
+    {
+        GameManager.instance.sfxManager.Play(GameManager.instance.buttonFX, GameManager.instance.soundFXGroup);
     }
 
 

@@ -10,9 +10,6 @@ public class EnemyWalker : Enemy
     Rigidbody2D rb;
     [SerializeField] float speed;
 
-    public AudioClip killSound;
-    public AudioMixerGroup soundFXGroup;
-
     // Start is called before the first frame update
     public override void Start()
     {
@@ -38,7 +35,7 @@ public class EnemyWalker : Enemy
     {
         if (!anim.GetBool("Death") && !anim.GetBool("Squish"))
         {
-            if (sr.flipX)
+            if (!sr.flipX)
             {
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
             }
@@ -59,7 +56,6 @@ public class EnemyWalker : Enemy
 
     public override void Death()
     {
-        GameManager.instance.playerInstance.GetComponent<ObjectSounds>().Play(killSound, soundFXGroup);
         base.Death();
         anim.SetBool("Death", true);
         rb.velocity = Vector2.zero;
@@ -68,7 +64,7 @@ public class EnemyWalker : Enemy
 
     public void IsSquished()
     {
-        GameManager.instance.playerInstance.GetComponent<ObjectSounds>().Play(killSound, soundFXGroup);
+        GameManager.instance.sfxManager.Play(GameManager.instance.killSound, GameManager.instance.soundFXGroup);
         anim.SetBool("Squish", true);
         rb.velocity = Vector2.zero;
         Destroy(transform.parent.gameObject, 1.0f);

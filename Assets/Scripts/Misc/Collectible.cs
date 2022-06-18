@@ -20,7 +20,7 @@ public class Collectible : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameManager.instance.playerInstance.GetComponent<ObjectSounds>().Play(pickupSound, soundFXGroup);
+            GameManager.instance.sfxManager.Play(pickupSound, soundFXGroup);
             switch (curCollectible)
             {
                 case CollectibleType.LIFE:

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
         {
             if (_lives > value)
             {
-                playerInstance.sfxManager.Play(playerInstance.dieSound, playerInstance.soundFXGroup);
+                sfxManager.Play(dieSound, soundFXGroup);
                 playerInstance.transform.position = currentLevel.spawnPoint.transform.position;
             }
 
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
             if (_lives > maxLives)
                 _lives = maxLives;
 
-            if (_lives < 0)
+            if (_lives < 1)
                 GameOver();
 
             Debug.Log("Lives Set To: " + lives.ToString());
@@ -41,6 +42,17 @@ public class GameManager : MonoBehaviour
     }
 
     public PlayerController playerPrefab;
+
+    public ObjectSounds sfxManager;
+
+    public AudioClip jumpSound;
+    public AudioClip dieSound;
+    public AudioClip killSound;
+    public AudioClip buttonFX;
+    public AudioClip pauseSound;
+    public AudioClip enemyHit;
+    public AudioMixerGroup soundFXGroup;
+
     [HideInInspector] public PlayerController playerInstance;
     [HideInInspector] public Level currentLevel;
     [HideInInspector] public UnityEvent<int> onLifeValueChanged;

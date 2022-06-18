@@ -46,11 +46,11 @@ public class EnemyTurret : Enemy
             {
                 if (GameManager.instance.playerInstance.gameObject.transform.position.x < transform.position.x)
                 {
-                    sr.flipX = true;
+                    sr.flipX = false;
                 }
                 else
                 {
-                    sr.flipX = false;
+                    sr.flipX = true;
                 }
             }
 
@@ -78,14 +78,16 @@ public class EnemyTurret : Enemy
 
         timeSinceLastFire = Time.time;
 
-        if (sr.flipX)
+        if (!sr.flipX)
         {
             Projectile temp = Instantiate(projectilePrefab, spawnPointLeft.position, spawnPointLeft.rotation);
+            temp.GetComponent<SpriteRenderer>().flipX = false;
             temp.speed = -projectileForce;
         }
         else
         {
             Projectile temp = Instantiate(projectilePrefab, spawnPointRight.position, spawnPointRight.rotation);
+            temp.GetComponent<SpriteRenderer>().flipX = true;
             temp.speed = projectileForce;
         }    
     }

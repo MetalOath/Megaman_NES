@@ -33,7 +33,10 @@ public class Projectile : MonoBehaviour
                 Enemy e = collision.gameObject.GetComponent<Enemy>();
 
                 if (e)
+                {
                     e.TakeDamage(damageValue);
+                    GameManager.instance.sfxManager.Play(GameManager.instance.enemyHit, GameManager.instance.soundFXGroup);
+                }
 
                 Destroy(gameObject);
             }
