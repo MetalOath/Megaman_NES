@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public int jumpForce;
     public bool isGrounded;
     public bool isClimbing = false;
+    public bool lookingUp;
     public LayerMask isGroundLayer;
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if (jumpForce <= 0)
         {
-            jumpForce = 300;
+            jumpForce = 350;
         }
 
         if (groundCheckRadius <= 0)
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && !lookingUp)
         {
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
@@ -115,27 +116,25 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = Vector2.zero;
             }
         }
-        
 
         if (Input.GetButtonUp("Fire1") || verticalInput < 0.1)
         {
             anim.SetBool("combo", false);
         }
 
+        if (isClimbing == false)
+        {
+            anim.SetBool("isClimbing", false);
+        }
+
         anim.SetFloat("speed", Mathf.Abs(horizontalInput));
         anim.SetFloat("vert", verticalInput);
         anim.SetBool("isGrounded", isGrounded);
-
-
-        //check for flipped
-        //if (horizontalInput > 0 && sr.flipX || horizontalInput < 0 && !sr.flipX )
-        //    sr.flipX = !sr.flipX;
+        anim.SetBool("lookUp", isGrounded);
+        lookingUp = curPlayingClip[0].clip.name == "Lookup";
 
         if (horizontalInput != 0)
             sr.flipX = (horizontalInput < 0);
-
-        //sr.flipX = (horizontalInput < 0) ? true : (horizontalInput > 0) ? false : sr.flipX;
-
     }
 
     public void StartJumpForceChange()
@@ -150,7 +149,6 @@ public class PlayerController : MonoBehaviour
             jumpForce /= 2;
             StopCoroutine("JumpForceChange");
         }
-
     }
 
     IEnumerator JumpForceChange()

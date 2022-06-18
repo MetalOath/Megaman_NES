@@ -19,7 +19,7 @@ public class ShootProjectile : MonoBehaviour
         anim = GetComponent<Animator>();
 
         if (projectileSpeed <= 0)
-            projectileSpeed = 7.0f;
+            projectileSpeed = 14.0f;
 
         if (!projectileSpawnPointLeft || !projectileSpawnPointRight || !projectilePrefab)
             Debug.LogWarning("Issue with inspector values");
